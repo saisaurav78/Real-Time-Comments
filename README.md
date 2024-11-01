@@ -35,21 +35,21 @@ A real-time comments application where users can log in and post comments that a
    git clone https://github.com/saisaurav78/Real-Time-Comments.git
    cd RealTimeComments
    Frontend:
-    cd frontend
+    cd front-end
     npm install
 
     Backend:
-    cd ../backend
+    cd ../back-end
     npm install
 
-    Environmentalvariables: 
+   Create a .env file in the back-end directory and add below Environmental variables for database connectivity: 
     Host=yourhost
     Db_PORT=yourDBport
     Db=yourDB
     User=yourUserName
     Password=yourPassword
 
-   Run npm start in both frontend and backend directories
+   Run npm start in both front-end and back-end directories
    ```
 
 ## Usage
