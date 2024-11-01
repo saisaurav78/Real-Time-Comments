@@ -14,5 +14,7 @@ export default function LoginPage() {
     }
   }, [isAuth, router]);
 
-  return <>{!isAuth && <LoginForm />}</>;
+  return <>
+    {!isAuth && <LoginForm />}
+  </>;
 }

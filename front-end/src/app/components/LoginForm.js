@@ -9,37 +9,37 @@ import { LoginContext } from '../context/LoginContext';
 export default function LoginForm() {
   const [user, setUser] = useState('');
   const [error, setError] = useState(null);
-  const { setIsAuth } = useContext(LoginContext);
+  const { setIsAuth, setUsername } = useContext(LoginContext); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user) setError('username is required')
-    else {
-    
+    setError(null); 
+
+    if (!user) {
+      setError('Username is required');
+    } else {
       try {
         const res = await axios.post('http://localhost:3001/api/login/', { username: user });
-        const sessionID = res.data.sessionID
-        localStorage.setItem("sessionID", sessionID)
+        const sessionID = res.data.sessionID;
+        localStorage.setItem('sessionID', sessionID);
+        setUsername(user);
         if (res.status === 200) {
           setIsAuth(true);
         }
-        else {
-          setError(res.data.message);
-        }
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || 'An error occurred during login');
       }
     }
   };
 
   return (
     <Box
-          sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width:'30%',
-              mt: '10%',
-              m:'0 auto'
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '30%',
+        mt: '10%',
+        m: '0 auto',
       }}
     >
       <FormControl component='form' onSubmit={handleSubmit} noValidate autoComplete='off' fullWidth>
@@ -48,12 +48,12 @@ export default function LoginForm() {
         </Typography>
         <TextField
           id='outlined-username'
-          label='username'
+          label='Username'
           variant='outlined'
           value={user}
           onChange={(e) => setUser(e.target.value)}
-                  sx={{ mb: 2 }} 
-                  name='username'
+          sx={{ mb: 2 }}
+          name='username'
         />
         <SubmitButton label='Login' />
         {error && <FormLabel sx={{ color: 'red', mt: 2 }}>{error}</FormLabel>}

@@ -1,38 +1,37 @@
 'use client';
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import React, { useContext } from 'react';
 import { CommentContext } from '../context/CommentContext';
+import { List, ListItem, ListItemText, Typography, Avatar } from '@mui/material';
 
-export default function CommentList() {
-  const { comments } = React.useContext(CommentContext);
-
-  if (!comments || comments.length === 0) {
-    return <Typography>No comments available</Typography>;
-  }
+const CommentList = () => {
+  const { comments } = useContext(CommentContext);
 
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', mt: 3 }}>
-      {comments.map((comment, index) => (
-        <React.Fragment key={index}>
-          <ListItem alignItems='flex-start'>
-            <ListItemAvatar>
-              <Avatar
-                alt={comment.author || 'User'}
-                src={comment.avatar || '/static/images/avatar/default.jpg'}
-              />
-            </ListItemAvatar>
-            <Typography variant='body1' sx={{ ml: 2 }}>
-              {comment.text}
-            </Typography>
+    <List sx={{ mt: 2 }}>
+      <Typography variant='h6' align='center' sx={{ mt: 2 }}>
+        Comments
+      </Typography>
+      {comments.length > 0 ? (
+        comments.map((comment, index) => (
+          <ListItem key={index} divider sx={{ bgcolor: index % 2 === 0 ? '#f9f9f9' : '#ffffff' }}>
+            <Avatar sx={{ mr: 2 }}>{comment.username?.charAt(0)}</Avatar>{' '}
+            <ListItemText
+              primary={comment.username || 'Anonymous'}
+              secondary={
+                <Typography variant='body2' sx={{ wordWrap: 'break-word' }}>
+                  {comment.comment}
+                </Typography>
+              }
+            />
           </ListItem>
-          {index < comments.length - 1 && <Divider variant='inset' component='li' />}
-        </React.Fragment>
-      ))}
+        ))
+      ) : (
+        <Typography variant='body1' align='center'>
+          No comments yet.
+        </Typography>
+      )}
     </List>
   );
-}
+};
+
+export default CommentList;
