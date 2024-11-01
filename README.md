@@ -32,7 +32,7 @@ A real-time comments application where users can log in and post comments that a
 
  **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/realtime-comments-app.git
+   git clone https://github.com/saisaurav78/Real-Time-Comments.git
    cd RealTimeComments
    Frontend:
     cd frontend
